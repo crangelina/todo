@@ -1,34 +1,23 @@
-//goal: basic todo list that adds items & is able to toggle completed and incomplete through checkbox
-//build li as sep. obj
-//build input type checkbox as sep. obj
-//append input to li
 
-
-
-//where most variables/states will go
-//prop on top, func underneath
 var TodoApp = {
 	
-	//this is the array that keeps all todo items (models/data)
-	//will house all the instances of the todos constructor
-	//anytime new todo is made it will be stored here
+	//stores todo items (models/data/instances of todos constructor)
 	todos: [],
 
-	//set top level jquery variables
+	//top level jquery variables
 	$todoList: null,
 	$addButton: null,
 	$input: null
 };
 
-//this func sets all jquery variables
+//sets & binds jquery elements
 TodoApp.init = function() {
-	// set necessary jquery elements
+	//set
 	this.$todoList = $('#list');
 	this.$addButton = $('#addButton');
 	this.$input = $('#input');
 
-
-	// bind jquery elements
+	//bind
 	this.$addButton.on('click', this.addTodo);
 
 	this.$input.on('keydown', function(e){
@@ -43,10 +32,7 @@ TodoApp.init = function() {
 };
 
 //doesn't add to html
-//reads the value from the input
-//creates a new  instance of a todo item
-//pushes it into todo array on todo app
-//calls renderlist func
+//reads input value, creates new instance, pushes to array, calls renderlist()
 TodoApp.addTodo = function() {
 	var inputValue = TodoApp.$input.val();
 	var newItem = new TodoItem(inputValue);
@@ -57,10 +43,7 @@ TodoApp.addTodo = function() {
 }
 
 
-//clears $todoList
-//loops through array
-//builds li
-//appends to $todoList
+//clears list, loops through array, builds list item, appends to list
 TodoApp.renderList = function() {
 	TodoApp.$todoList.empty();
 	for (var i = 0; i < TodoApp.todos.length; i++) {
@@ -102,7 +85,7 @@ TodoApp.renderListItem = function(todoItem) {
     	TodoApp.save();
 	});
 	
-	//apply strikethrough to checked $listItem
+	//strikethrough on checked
 
     if(todoItem.completed === true) {
         $listItem.addClass("striked");
@@ -138,6 +121,7 @@ TodoApp.renderListItem = function(todoItem) {
 	$editButton.addClass("btn btn-link btn-xs");
 	$editButton.text("Edit");
 
+	//edit todo
 	$editButton.on("click", function() {
 		$listItemSpan.hide();
 		$edit.show();
@@ -167,27 +151,40 @@ TodoApp.renderListItem = function(todoItem) {
 }
 
 
-
 function TodoItem(name) {
 	this.name = name;
 	this.completed = false;	
 }
 
 
-
-
 TodoApp.save = function() {
 	var json = JSON.stringify(TodoApp.todos);
-	localStorage.setItem("todos", json);
-	
+	localStorage.setItem("todos", json);	
 }
+
 
 TodoApp.load = function() {
 	var parsedTodos = JSON.parse( localStorage.getItem("todos") );
-	TodoApp.todos = parsedTodos;
+
+	if (parsedTodos !== null) {
+		TodoApp.todos = parsedTodos;
+	} else {
+		TodoApp.todos = [];
+	}
 }
 
+
 TodoApp.init();
+
+
+
+
+
+
+//---------------------------------------------
+//			 PERSONAL NOTES
+//---------------------------------------------
+
 
 //create edit button inside of <li>
 	//create input inside of <li> that is display none
