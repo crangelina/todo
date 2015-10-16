@@ -32,11 +32,7 @@ input[type = checkbox] {
 	margin-right: 10px;
 }
 
-.btn-default {
-	float: right;
-}
-
-.btn-link {
+.button-wrapper {
 	float: right;
 }
 
@@ -46,4 +42,16 @@ input[type = checkbox] {
 
 .edit {
 	display: none;
+}
+
+.comment {
+	display: none;
+}
+
+.commentListItem:last-child {
+	border-bottom: none;
+}
+
+.commentButton {
+	margin: 0 1px;
 }
